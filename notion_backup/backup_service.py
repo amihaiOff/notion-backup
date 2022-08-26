@@ -10,6 +10,7 @@ from tqdm import tqdm
 
 from notion_backup.configuration_service import ConfigurationService
 from notion_backup.notion_client import NotionClient
+from backups_manager import run_backup_management
 
 STATUS_WAIT_TIME = 5
 block_size = 1024  # 1 Kibibyte
@@ -111,13 +112,14 @@ class BackupService:
 
 
 @click.command()
-@click.option("--output-dir", default=".", help="Where the zip export will be saved")
-@click.option("--space-id", help="Id of Notion workspace")
+@click.option("--output-dir", default="output", help="Where the zip export will be saved")
+@click.option("--space-id", default='6096817a-6c9a-48bb-b0eb-122de0cb4103', help="Id of Notion workspace")
 def main(output_dir, space_id):
     output_dir_path = Path(output_dir)
     print(f"Backup Notion workspace into directory {output_dir_path.resolve()}")
     backup_service = BackupService(output_dir_path, space_id)
     backup_service.backup()
+    run_backup_management(output_dir)
 
 
 if __name__ == '__main__':

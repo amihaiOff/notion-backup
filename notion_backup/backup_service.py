@@ -113,7 +113,7 @@ class BackupService:
 
 @click.command()
 @click.option("--output-dir", default="output", help="Where the zip export will be saved")
-@click.option("--space-id", default='6096817a-6c9a-48bb-b0eb-122de0cb4103', help="Id of Notion workspace")
+@click.option("--space-id", default='', help="Id of Notion workspace")
 def main(output_dir, space_id):
     output_dir_path = Path(output_dir)
     print(f"Backup Notion workspace into directory {output_dir_path.resolve()}")
